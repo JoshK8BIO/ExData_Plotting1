@@ -1,6 +1,10 @@
-Data<-read.table(text=grep("^[1,2]/2/2007",readLines("data.txt"), value=TRUE), 
-                 col.names=c("Date","Time","Global_active_power",
-                             "Global_reactive_power","Voltage",
-                             "Global_intensity","Sub_metering_1",
-                             "Sub_metering_2","Sub_metering_3"),
-                 sep=";",header=TRUE)
+#Read in power data
+powerData <- read.table("data.txt", header=T , sep =  ";", dec = "." , na.strings = "?")
+#Subset power data between specified dates
+powerData <- powerData[powerData$Date %in% c("1/2/2007", "2/2/2007"), ]
+
+#Create histogram
+hist(powerData$Global_active_power, col="red", main="Global Active Power", 
+     xlab= "Global Active Power (kilowatts)") 
+dev.copy(png, file="plot1.png",width=480, height=480)
+dev.off()
